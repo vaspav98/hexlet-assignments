@@ -15,24 +15,18 @@ class AppTest {
     void testTake() {
         // BEGIN
         List<Integer> elements = new ArrayList<>(List.of(1, 3, 5, 6, 10));
-        int count = 4;
+        List<Integer> expected1 = new ArrayList<>(List.of(1, 3, 5));
+        List<Integer> actual1 = App.take(elements, 3);
+        assertThat(actual1).isEqualTo(expected1);
 
-        assertThat(App.take(elements, count))
-                .isNotEmpty()
-                .hasSize(count)
-                .contains(6, 3);
-
-        count = 20;
-
-        assertThat(App.take(elements, count))
-                .isNotEmpty()
-                .hasSizeLessThanOrEqualTo(elements.size())
-                .contains(6);
+        List<Integer> expected2 = new ArrayList<>(List.of(1, 3, 5, 6, 10));
+        List<Integer> actual2 = App.take(elements, 20);
+        assertThat(actual2).isEqualTo(expected2);
 
         elements.clear();
-
-        assertThat(App.take(elements, count))
-                .isEmpty();
+        List<Integer> expected3 = new ArrayList<>();
+        List<Integer> actual3 = App.take(elements, 3);
+        assertThat(actual3).isEqualTo(expected3);
         // END
     }
 }
