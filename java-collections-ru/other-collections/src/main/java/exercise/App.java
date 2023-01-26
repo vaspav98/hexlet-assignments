@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 // BEGIN
 class App {
@@ -23,14 +21,14 @@ class App {
     }
 
     public static LinkedHashMap<String, String> genDiff(Map<String, Object> data1, Map<String, Object> data2) {
-        Map<String, String> result = new TreeMap<>();
-        Map<String, Object> generalMap = new HashMap<>();
-        generalMap.putAll(data1);
-        generalMap.putAll(data2);
-        for (String key : generalMap.keySet()) {
-            if (!data1.containsKey(key) && data2.containsKey(key)) {
+        LinkedHashMap<String, String> result = new LinkedHashMap<>();
+        Set<String> keys = new TreeSet<>();
+        keys.addAll(data1.keySet());
+        keys.addAll(data2.keySet());
+        for (String key : keys) {
+            if (!data1.containsKey(key)) {
                 result.put(key, "added");
-            } else if (data1.containsKey(key) && !data2.containsKey(key)) {
+            } else if (!data2.containsKey(key)) {
                 result.put(key, "deleted");
             } else if (data1.get(key).equals(data2.get(key))) {
                 result.put(key, "unchanged");
@@ -38,7 +36,7 @@ class App {
                 result.put(key, "changed");
             }
         }
-        return new LinkedHashMap<>(result);
+        return result;
     }
 }
 //END
