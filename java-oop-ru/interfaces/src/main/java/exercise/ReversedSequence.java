@@ -3,7 +3,7 @@ package exercise;
 import org.apache.commons.lang3.StringUtils;
 
 // BEGIN
-public class ReversedSequence implements CharSequence{
+public class ReversedSequence implements CharSequence {
 
     private String reversedSequence;
 
