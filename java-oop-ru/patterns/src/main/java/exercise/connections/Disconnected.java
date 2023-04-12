@@ -6,7 +6,6 @@ import exercise.TcpConnection;
 public class Disconnected implements Connection {
 
     private TcpConnection tcpConnection;
-    private final String stateName = "disconnected";
 
     public Disconnected(TcpConnection tcpConnection) {
         this.tcpConnection = tcpConnection;
@@ -14,7 +13,7 @@ public class Disconnected implements Connection {
 
     @Override
     public String getCurrentState() {
-        return this.stateName;
+        return "disconnected";
     }
 
     @Override

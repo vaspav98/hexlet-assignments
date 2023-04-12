@@ -11,7 +11,7 @@ public class TcpConnection {
     private int port;
     private Connection state;
 
-    private String buffer;
+    private List<String> buffer = new ArrayList<>();
 
     public TcpConnection(String ip, int port) {
         this.ip = ip;
@@ -24,7 +24,7 @@ public class TcpConnection {
     }
 
     public void addDataToBuffer(String data) {
-        this.buffer = data;
+        this.buffer.add(data);
     }
 
     public String getCurrentState() {
