@@ -1,8 +1,5 @@
 package exercise;
 
-import javax.sound.midi.Soundbank;
-import java.sql.SQLOutput;
-
 // BEGIN
 public class App {
 
