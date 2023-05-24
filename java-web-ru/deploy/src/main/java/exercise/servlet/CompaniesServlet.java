@@ -25,8 +25,7 @@ public class CompaniesServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         if (request.getParameter("search") == null || request.getParameter("search").equals("")) {
-            out.write(companies.toString());
-            out.close();
+            companies.forEach(out::println);
             return;
         }
 
