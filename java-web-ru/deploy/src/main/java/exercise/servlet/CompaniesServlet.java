@@ -32,7 +32,7 @@ public class CompaniesServlet extends HttpServlet {
 
         String filteredCompanies =  companies.stream()
                 .filter(company -> company.contains(request.getParameter("search")))
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining("\n"));
 
         if (filteredCompanies.length() == 0) {
             out.write("Companies not found");
