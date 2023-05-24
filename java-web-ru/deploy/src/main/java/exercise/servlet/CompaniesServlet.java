@@ -34,13 +34,11 @@ public class CompaniesServlet extends HttpServlet {
                 .collect(Collectors.joining("\n"));
 
         if (filteredCompanies.length() == 0) {
-            out.write("Companies not found");
-            out.close();
+            out.println("Companies not found");
             return;
         }
 
-        out.write(filteredCompanies);
-        out.close();
+        out.println(filteredCompanies);
         // END
     }
 }
