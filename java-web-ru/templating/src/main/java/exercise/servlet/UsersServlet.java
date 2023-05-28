@@ -153,5 +153,3 @@ public class UsersServlet extends HttpServlet {
         return user;
     }
 }
-
-
