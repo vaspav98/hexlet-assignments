@@ -11,14 +11,13 @@
                      crossorigin="anonymous">
     </head>
     <body>
+        <h6><a href="/users">Все пользователи</a><br></h6>
         id: ${user.get("id")}<br>
         firstName: ${user.get("firstName")}<br>
         lastName: ${user.get("lastName")}<br>
         email: ${user.get("email")}<br>
         <br>
-        <h6><a href='/users/delete?id=${user.get("id")}'>Delete this user</a>
-        <br>
-        <h6><a href='/users'>Show all users</a>
+        <h6><a href='/users/delete?id=${user.get("id")}'>Delete this user</a></h6>
     </body>
 </html>
 <!-- END -->

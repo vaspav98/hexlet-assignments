@@ -153,4 +153,5 @@ public class UsersServlet extends HttpServlet {
         return user;
     }
 }
-//        <h6><a href="/users/show?id=${user.get('id')}">Не удалять</a></h6>
+
+//    ${user.get("firstName")} ${user.get("lastName")}
