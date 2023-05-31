@@ -1,1 +1,1 @@
-web: sh build/crud-in-memory/templating/bin/crud-in-memory
+web: sh build/install/crud-in-memory/bin/crud-in-memory
