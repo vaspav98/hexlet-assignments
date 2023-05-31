@@ -142,7 +142,6 @@ public class UsersServlet extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String id = getNextId();
-
         Map<String, String> user = new HashMap<>(
                 Map.of("firstName", firstName, "lastName", lastName, "email", email, "id", id));
 
