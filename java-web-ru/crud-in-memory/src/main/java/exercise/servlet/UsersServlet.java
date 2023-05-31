@@ -206,13 +206,9 @@ public class UsersServlet extends HttpServlet {
             return;
         }
 
-        for (Map<String, String> item : users) {
-            if (item.get("id").equals(id)) {
-                item.put("firstName", firstName);
-                item.put("lastName", lastName);
-                item.put("email", email);
-            }
-        }
+        user.put("firstName", firstName);
+        user.put("lastName", lastName);
+        user.put("email", email);
 
         response.sendRedirect("/users");
         // END
