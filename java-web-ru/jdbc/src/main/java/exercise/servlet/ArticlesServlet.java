@@ -72,7 +72,7 @@ public class ArticlesServlet extends HttpServlet {
         String query = "SELECT * FROM articles ORDER BY id LIMIT 10 OFFSET ?";
 
         int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-        int offset = page == 1 ? 0 : page * 10 - 10;
+        int offset = (page - 1) * 10;
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -108,12 +108,6 @@ public class ArticlesServlet extends HttpServlet {
         // BEGIN
         Map<String, String> article = new HashMap<>();
         String id = getId(request);
-
-        if (id == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-
         String query = "SELECT * FROM articles WHERE id = ?";
 
         try {
@@ -121,19 +115,17 @@ public class ArticlesServlet extends HttpServlet {
             statement.setInt(1, Integer.parseInt(id));
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                article.put("id", resultSet.getString("id"));
-                article.put("title", resultSet.getString("title"));
-                article.put("body", resultSet.getString("body"));
+            if (!resultSet.first()) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
             }
+
+            article.put("id", resultSet.getString("id"));
+            article.put("title", resultSet.getString("title"));
+            article.put("body", resultSet.getString("body"));
 
         } catch (SQLException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return;
-        }
-
-        if (article.get("id") == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 

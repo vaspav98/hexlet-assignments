@@ -20,15 +20,17 @@
       </tr>
   </table>
    <!-- BEGIN -->
-  <nav>
-    <ul class="pagination justify-content-center">
-      <li class="page-item" th:if="${page > 1}">
-        <a class="page-link" th:href="@{/articles(page=${page - 1})}">Prev</a>
-      </li>
-      <li class="page-item" th:if="${articles.size() == 10}">
-        <a class="page-link" th:href="@{/articles(page=${page + 1})}">Next</a>
-      </li>
-    </ul>
-  </nav>
+  <div class="container">
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:if="${page > 1}">
+          <a class="page-link" th:href="@{/articles(page=${page - 1})}">Prev</a>
+        </li>
+        <li class="page-item" th:if="${articles.size() == 10}">
+          <a class="page-link" th:href="@{/articles(page=${page + 1})}">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
   <!-- END -->
 </section>
