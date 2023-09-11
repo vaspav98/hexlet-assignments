@@ -9,12 +9,26 @@
           rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
           crossorigin="anonymous">
-    <title>users</title>
+    <title>Hello Hexlet!</title>
 </head>
 <body>
-    @for(var user : page.getUsers())
-        <p><a href="/users/${user.getId()}">${user.getFirstName() + " " + user.getLastName()}</a></p>
-    @endfor
+<div class="mx-auto p-4 py-md-5">
+    <main>
+        <h1>Пользователи</h1>
+        <table class="table table-striped">
+            @for(var user : page.getUsers())
+                <tr>
+                    <td>
+                        ${user.getId()}
+                    </td>
+                    <td>
+                        <a href="/users/${user.getId()}">${user.getFirstName()} ${user.getLastName()}</a>
+                    </td>
+                </tr>
+            @endfor
+        </table>
+    </main>
+</div>
 </body>
 </html>
 
