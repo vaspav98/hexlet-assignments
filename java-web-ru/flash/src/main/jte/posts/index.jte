@@ -2,6 +2,7 @@
 @param PostsPage page
 
 @template.layout.page(
+    page = page,
     content = @`
         <h1>Посты</h1>
         <table class="table table-striped">
