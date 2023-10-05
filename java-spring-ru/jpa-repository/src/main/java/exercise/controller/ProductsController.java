@@ -1,6 +1,7 @@
 package exercise.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +24,13 @@ public class ProductsController {
     // BEGIN
     @GetMapping("")
     public List<Product> index(@RequestParam(defaultValue = "0") int min,
-                               @RequestParam(defaultValue = "9000000") int max) {
-        return productRepository.findByPriceBetweenOrderByPrice(min, max);
+                               @RequestParam(defaultValue = Integer.MAX_VALUE + "") int max) {
+//        return productRepository.findByPriceBetweenOrderByPrice(min, max);
+        /**
+         * другой способ вывести отсортированный список
+         */
+        Sort sort = Sort.by(Sort.Order.asc("price"));
+        return productRepository.findByPriceBetween(min, max, sort);
     }
     // END
 
