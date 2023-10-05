@@ -16,19 +16,19 @@ import exercise.Data;
 
 // BEGIN
 @RestController
-@RequestMapping("/api/users/{id}")
+@RequestMapping("/api")
 public class PostsController {
 
     private List<Post> posts = Data.getPosts();
 
-    @GetMapping("/posts")
+    @GetMapping("/users/{id}/posts")
     public List<Post> index(@PathVariable long id) {
         return posts.stream()
                 .filter(p -> p.getUserId() == id)
                 .toList();
     }
 
-    @PostMapping("/posts")
+    @PostMapping("/users/{id}/posts")
     @ResponseStatus(HttpStatus.CREATED)
     public Post create(@PathVariable int id, @RequestBody Post newPost) {
         newPost.setUserId(id);
