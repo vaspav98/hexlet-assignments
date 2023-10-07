@@ -73,7 +73,7 @@ public class TaskControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        HashMap<String, String> data = new HashMap<>(Map.of("title", "hz", "description", "about hz"));
+        Task data = createTask();
 
         MockHttpServletRequestBuilder request = post("/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -82,9 +82,9 @@ public class TaskControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        Task addedTask = taskRepository.findByTitle("hz").get();
-        assertThat(addedTask.getTitle()).isEqualTo("hz");
-        assertThat(addedTask.getDescription()).isEqualTo("about hz");
+        Task addedTask = taskRepository.findByTitle(data.getTitle()).get();
+        assertThat(addedTask.getTitle()).isEqualTo(data.getTitle());
+        assertThat(addedTask.getDescription()).isEqualTo(data.getDescription());
     }
 
     @Test
