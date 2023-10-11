@@ -121,7 +121,6 @@ class ProductControllerTest {
         productRepository.save(testProduct);
 
         var data = new ProductUpdateDTO();
-        data.setTitle("new title");
         data.setPrice(20);
 
         var request = put("/products/{id}", testProduct.getId())

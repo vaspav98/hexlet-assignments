@@ -27,13 +27,11 @@ public abstract class ProductMapper {
     @Mapping(target = "barcode", source = "vendorCode")
     public abstract Product map(ProductCreateDTO dto);
 
-//    @InheritInverseConfiguration
     @Mapping(target = "title", source = "name")
     @Mapping(target = "price", source = "cost")
     @Mapping(target = "vendorCode", source = "barcode")
     public abstract ProductDTO map(Product model);
 
-    @Mapping(target = "name", source = "title")
     @Mapping(target = "cost", source = "price")
     public abstract void update(ProductUpdateDTO dto, @MappingTarget Product model);
 }

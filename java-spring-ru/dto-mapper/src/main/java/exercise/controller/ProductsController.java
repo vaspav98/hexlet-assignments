@@ -45,9 +45,7 @@ public class ProductsController {
     public ProductDTO show(@PathVariable long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
-        System.out.println(product);
         ProductDTO dto = mapper.map(product);
-        System.out.println(dto);
         return mapper.map(product);
     }
 
@@ -63,9 +61,7 @@ public class ProductsController {
     public ProductDTO update(@PathVariable long id, @RequestBody ProductUpdateDTO data) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
-        String oldTitle = product.getName();
         mapper.update(data, product);
-        product.setName(oldTitle);
         productRepository.save(product);
         return mapper.map(product);
     }
