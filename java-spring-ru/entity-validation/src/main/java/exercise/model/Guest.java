@@ -38,7 +38,6 @@ public class Guest {
     private String name;
 
     @Email
-    @Column(unique = true)
     private String email;
 
     @Pattern(regexp = "^\\+\\d{11,13}$")
@@ -46,7 +45,6 @@ public class Guest {
     private String phoneNumber;
 
     @Pattern(regexp = "^\\d{4}$")
-    @Column(unique = true)
     private String clubCard;
 
     @Future
