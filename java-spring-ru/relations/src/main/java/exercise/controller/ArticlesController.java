@@ -34,12 +34,16 @@ public class ArticlesController {
 
     // BEGIN
     @PostMapping("")
-    public Article create(@RequestBody Article data) {
-        return articleRepository.save(data);
+    public Article create(@RequestBody ArticleDto data) {
+        Article article = new Article();
+        article.setName(data.getName());
+        article.setBody(data.getBody());
+        article.setCategory(data.getCategory());
+        return articleRepository.save(article);
     }
 
     @PatchMapping("/{id}")
-    public Article update(@PathVariable long id, @RequestBody Article data) {
+    public Article update(@PathVariable long id, @RequestBody ArticleDto data) {
         Article article = articleRepository.findById(id);
         article.setName(data.getName());
         article.setBody(data.getBody());

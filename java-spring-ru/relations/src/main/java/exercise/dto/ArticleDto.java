@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ArticleDto {
-    private long id;
     private String name;
     private String body;
     private Category category;
