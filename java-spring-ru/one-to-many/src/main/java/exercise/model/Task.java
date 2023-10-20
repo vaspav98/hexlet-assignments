@@ -41,7 +41,8 @@ public class Task {
     private Date updatedAt;
 
     // BEGIN
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     private User assignee;
     // END
 }

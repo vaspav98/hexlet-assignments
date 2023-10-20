@@ -45,7 +45,19 @@ public class User {
     private Date createdAt;
 
     // BEGIN
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", createdAt=" + createdAt +
+                ", tasks=" + tasks +
+                '}';
+    }
+
     // END
 }

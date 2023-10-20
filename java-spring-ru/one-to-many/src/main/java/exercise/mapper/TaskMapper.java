@@ -23,33 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class TaskMapper {
 
     // BEGIN
-    @Autowired
-    UserRepository userRepository;
+    @Mapping(source = "assigneeId",  target = "assignee.id")
+    public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(source = "assignee.id", target = "assigneeId")
     public abstract TaskDTO map(Task model);
 
-    public Task map (TaskCreateDTO dto) {
-        User assignee = userRepository.findById(dto.getAssigneeId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Employee with id " + dto.getAssigneeId() + " was not found"));
-
-        Task task = new Task();
-        task.setTitle(dto.getTitle());
-        task.setDescription(dto.getDescription());
-        task.setAssignee(assignee);
-        return task;
-    }
-
-    public void update(TaskUpdateDTO dto, Task model) {
-        User assignee = userRepository.findById(dto.getAssigneeId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Employee with id " + dto.getAssigneeId() + " was not found"));
-
-        model.setTitle(dto.getTitle());
-        model.setDescription(dto.getDescription());
-        model.setAssignee(assignee);
-    }
+    public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
     // END
 
 }

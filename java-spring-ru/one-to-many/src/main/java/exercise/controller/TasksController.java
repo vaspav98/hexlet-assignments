@@ -7,6 +7,7 @@ import exercise.dto.TaskDTO;
 import exercise.dto.TaskUpdateDTO;
 import exercise.mapper.TaskMapper;
 import exercise.model.Task;
+import exercise.model.User;
 import exercise.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,11 @@ public class TasksController {
     TaskRepository taskRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     TaskMapper taskMapper;
+
 
     @GetMapping("")
     public List<TaskDTO> index() {
@@ -53,6 +58,10 @@ public class TasksController {
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO create(@Valid @RequestBody TaskCreateDTO data) {
         Task newTask = taskMapper.map(data);
+        User user = userRepository.findById(data.getAssigneeId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "User with id " + data.getAssigneeId() + " not found"));
+        newTask.setAssignee(user);
         taskRepository.save(newTask);
         return taskMapper.map(newTask);
     }
@@ -61,7 +70,13 @@ public class TasksController {
     public TaskDTO update(@PathVariable long id, @Valid @RequestBody TaskUpdateDTO data) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
+        User user = userRepository.findById(data.getAssigneeId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "User with id " + data.getAssigneeId() + " not found"));
+        System.out.println("before update " + task.getAssignee());
         taskMapper.update(data, task);
+        System.out.println("after update " + task.getAssignee());
+        task.setAssignee(user);
         taskRepository.save(task);
         return taskMapper.map(task);
     }
