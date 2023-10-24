@@ -48,7 +48,6 @@ public class ProductsController {
         Page<Product> productsPage = productRepository.findAll(spec, PageRequest.of(page - 1, 10));
         Page<ProductDTO> productsDTOPage = productsPage.map(p -> productMapper.map(p));
         return productsDTOPage.toList();
-
     }
     // END
 
