@@ -28,7 +28,7 @@ public class AuthorService {
                 .toList();
     }
 
-    public AuthorDTO findById(Long id) {
+    public AuthorDTO geById(Long id) {
         Author author = authorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author with id " + id + " not found"));
         return authorMapper.map(author);

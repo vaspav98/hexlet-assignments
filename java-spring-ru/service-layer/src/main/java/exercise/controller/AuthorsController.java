@@ -34,7 +34,7 @@ public class AuthorsController {
 
     @GetMapping("/{id}")
     public AuthorDTO show(@PathVariable Long id) {
-        return authorService.findById(id);
+        return authorService.geById(id);
     }
 
     @PostMapping("")

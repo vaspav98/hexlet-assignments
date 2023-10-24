@@ -6,9 +6,7 @@ import exercise.dto.BookUpdateDTO;
 import exercise.exception.ResourceNotFoundException;
 import exercise.mapper.BookMapper;
 import exercise.model.Book;
-import exercise.repository.AuthorRepository;
 import exercise.repository.BookRepository;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +19,6 @@ public class BookService {
     BookRepository bookRepository;
 
     @Autowired
-    AuthorRepository authorRepository;
-
-    @Autowired
     BookMapper bookMapper;
 
 
@@ -34,7 +29,7 @@ public class BookService {
                 .toList();
     }
 
-    public BookDTO findById(Long id) {
+    public BookDTO getById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id " + id + " not found"));
         return bookMapper.map(book);

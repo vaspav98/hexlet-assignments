@@ -34,7 +34,7 @@ public class BooksController {
 
     @GetMapping("/{id}")
     public BookDTO show(@PathVariable Long id) {
-        return bookService.findById(id);
+        return bookService.getById(id);
     }
 
     @PostMapping("")
