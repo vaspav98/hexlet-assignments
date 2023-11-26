@@ -15,7 +15,7 @@ class App {
             thread1.join();
             thread2.join();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         System.out.println(safetyList.getSize());

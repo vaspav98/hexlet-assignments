@@ -15,7 +15,7 @@ public class ListThread extends Thread {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             list.add(i);
         }
