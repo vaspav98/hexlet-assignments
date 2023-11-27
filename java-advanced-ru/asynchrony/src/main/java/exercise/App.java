@@ -10,43 +10,38 @@ import java.nio.file.StandardOpenOption;
 class App {
 
     // BEGIN
-    public static CompletableFuture<String> unionFiles(String filePath1, String filePath2, String resultFilePath) {
+    private static Path getFullPath(String filePath) {
+        return Paths.get(filePath).toAbsolutePath().normalize();
+    }
 
-        CompletableFuture<String> futureFile1Content = CompletableFuture.supplyAsync(() -> {
+    public static CompletableFuture<String> unionFiles(String source1, String source2, String dest) {
+
+        CompletableFuture<String> futureContent1 = CompletableFuture.supplyAsync(() -> {
             String content = null;
             try {
-                content = Files.readString(Paths.get(filePath1));
+                content = Files.readString(getFullPath(source1));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return content;
-        }).exceptionally(ex -> {
-            System.out.println(ex.getMessage());
-            return null;
         });
 
-        CompletableFuture<String> futureFile2Content = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<String> futureContent2 = CompletableFuture.supplyAsync(() -> {
             String content = null;
             try {
-                content = Files.readString(Paths.get(filePath2));
+                content = Files.readString(Paths.get(source2));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return content;
-        }).exceptionally(ex -> {
-            System.out.println(ex.getMessage());
-            return null;
         });
 
-        CompletableFuture<String> futureResultFile = futureFile1Content.thenCombine(futureFile2Content,
+        CompletableFuture<String> futureResultContent = futureContent1.thenCombine(futureContent2,
                 (file1Content, file2Content) -> {
-            Path resultFile = Paths.get(resultFilePath);
+            Path destPath = Paths.get(dest);
             String resultContent = file1Content + file2Content;
             try {
-                if (!Files.exists(resultFile)) {
-                    Files.createFile(resultFile);
-                }
-                Files.writeString(resultFile, resultContent, StandardOpenOption.WRITE);
+                Files.writeString(destPath, resultContent, StandardOpenOption.CREATE);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -56,7 +51,7 @@ class App {
             return null;
         });
 
-        return futureResultFile;
+        return futureResultContent;
     }
     // END
 
@@ -65,7 +60,32 @@ class App {
         CompletableFuture<String> result = unionFiles("src/main/resources/file1.txt",
                 "src/main/resources/file2.txt", "src/main/resources/result.txt");
         System.out.println(result.get());
+        System.out.println(getDirectorySize(".gitignore").get());
         // END
     }
-}
 
+    public static CompletableFuture<Long> getDirectorySize(String path) {
+        return CompletableFuture.supplyAsync(() -> {
+            Long size = 0L;
+            try {
+                size = Files.walk(getFullPath(path), 1)
+                        .filter(p -> Files.isRegularFile(p))
+                        .mapToLong(p -> {
+                            try {
+                                return Files.size(p);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        })
+                        .sum();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return size;
+        }).exceptionally(ex -> {
+            System.out.println(ex.getMessage());
+            return null;
+        });
+    }
+
+}
